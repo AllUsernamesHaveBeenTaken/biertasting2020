@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Biertasting</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="This is an example of a meta description.">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+    <!--[if lt IE 9]>
+	    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+      <![endif]-->
+  </head>
+  <body>
+		<div class="container">
+      <div class="centeredContainer">
+        <form class="form" name="submit-to-google-sheet">
+          <h1 class="subscribe">Biertasting Les Deux alpes 2020</p>
+            
+          <h2>Wuk is junnen voornaam</h2>
+          <input name="voornaam"  placeholder="Voornal" required>
+          <h2>geen achternaan?</h2>
+          <input name="achternaam"  placeholder="Voornal" required>
+          <h2>bier1</h2>
+          <input name="bier1"  placeholder="Voornal" required>
+          <h2>bier2</h2>
+          <input name="bier2"  placeholder="Voornal" required>
+          <h2>bier3</h2>
+          <input name="bier3"  placeholder="Voornal" required>
+          <h2>bier4</h2>
+          <input name="bier4"  placeholder="Voornal" required>
+          <h2>bier5</h2>
+          <input name="bier5"  placeholder="Voornal" required>
+          <h2>bier6</h2>
+          <input name="bier6"  placeholder="Voornal" required>
+          <h2>bier7</h2>
+          <input name="bier7"  placeholder="Voornal" required>
+            
+          <button id="submit-form" type="submit"><span>dien maar in dikken</span></button>
+        </form>
+      </div>
+    </div>
+    <script>
+      (function($){
+        $.fn.serializeObject = function () {
+          "use strict";
+
+          var result = {};
+          var extend = function (i, element) {
+            var node = result[element.name];
+
+        // If node with same name exists already, need to convert it to an array as it
+        // is a multi-value field (i.e., checkboxes)
+
+            if ('undefined' !== typeof node && node !== null) {
+              if ($.isArray(node)) {
+                node.push(element.value);
+              } else {
+                result[element.name] = [node, element.value];
+              }
+            } else {
+              result[element.name] = element.value;
+            }
+          };
+
+          $.each(this.serializeArray(), extend);
+          return result;
+        };
+      })(jQuery);
+
+      var $form = $('.form')
+      var url = 'https://script.google.com/macros/s/AKfycbxBKA9DcenyiFlm3Ljmb022TOdb9QTnbcx7aH7n2mD5clqw172b/exec'
+      $('#submit-form').on('click', function(e) {
+        e.preventDefault();
+        var serialized = $form.serializeObject();
+          var jqxhr = $.ajax({
+            url: url,
+            method: "GET",
+            dataType: "json",
+            data: $form.serializeObject()
+          })
+      })
+      </script>
+  </body>
+</html>
